@@ -427,33 +427,21 @@ function run() {
             if (IS_WINDOWS) {
                 core.setFailed('This can be used only for Linux');
             }
-            let toolPath = tc.find(MIKERO_CACHE_NAME, '1');
-            if (!toolPath) {
-                core.info(`Extracting MikeroTools ${url}`);
-                let downloadPath = yield tc.downloadTool(url);
-                core.info(`Extracting MikeroTools ${url}`);
-                let extPath = yield tc.extractTar(downloadPath);
-                let binPath = path.join(extPath, 'bin');
-                let libPath = path.join(extPath, 'lib');
-                if (!(fs_1.default.existsSync(binPath) || fs_1.default.existsSync(libPath))) {
-                    core.setFailed('Missing path to lib or bin directory');
-                }
-                core.info(`Path install: ${extPath}`);
-                core.info(`Path Bin: ${binPath}`);
-                fs_1.default.readdir(extPath, (err, files) => {
-                    files.forEach(file => {
-                        core.info(file);
-                    });
+            core.info(`Extracting MikeroTools ${url}`);
+            let downloadPath = yield tc.downloadTool(url);
+            core.info(`Extracting MikeroTools ${url}`);
+            let extPath = yield tc.extractTar(downloadPath);
+            let binPath = path.join(extPath, 'bin');
+            let libPath = path.join(extPath, 'lib');
+            core.info(`Path Bin: ${binPath}`);
+            fs_1.default.readdir(extPath, (err, files) => {
+                files.forEach(file => {
+                    core.info(file);
                 });
-                core.addPath(binPath);
-                core.exportVariable('LD_LIBRARY_PATH', toolPath);
-                console.log('Caching tools');
-                let cachedDir = yield tc.cacheDir(extPath, MIKERO_CACHE_NAME, '1');
-                toolPath = cachedDir;
-            }
-            else {
-                console.log('Using cached tool');
-            }
+            });
+            core.addPath(binPath);
+            core.exportVariable('LD_LIBRARY_PATH', libPath);
+            console.log('Caching tools');
             // core.addPath(toolPath);
             console.log('Successfully installed', '1');
         }

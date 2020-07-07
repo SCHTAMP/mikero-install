@@ -14,10 +14,8 @@ async function run() {
         if (IS_WINDOWS){
             core.setFailed('This can be used only for Linux');
         }
-        let toolPath = tc.find(MIKERO_CACHE_NAME, '1');
 
 
-        if (!toolPath) {
             core.info(`Extracting MikeroTools ${url}`);
             let downloadPath = await tc.downloadTool(url);
 
@@ -26,12 +24,7 @@ async function run() {
             let binPath: string = path.join(extPath, 'bin')
             let libPath: string = path.join(extPath, 'lib')
 
-            if (!(fs.existsSync(binPath) || fs.existsSync(libPath))) {
-                core.setFailed('Missing path to lib or bin directory');
-            }
 
-
-            core.info(`Path install: ${extPath}`)
             core.info(`Path Bin: ${binPath}`)
 
             fs.readdir(extPath, (err, files) => {
@@ -41,14 +34,10 @@ async function run() {
             });
 
             core.addPath(binPath);
-            core.exportVariable('LD_LIBRARY_PATH', toolPath);
+            core.exportVariable('LD_LIBRARY_PATH', libPath);
 
             console.log('Caching tools');
-            let cachedDir = await tc.cacheDir(extPath, MIKERO_CACHE_NAME, '1');
-            toolPath = cachedDir;
-            } else {
-            console.log('Using cached tool');
-            }
+
 
             // core.addPath(toolPath);
 
