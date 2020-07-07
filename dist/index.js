@@ -427,21 +427,19 @@ function run() {
             if (IS_WINDOWS) {
                 core.setFailed('This can be used only for Linux');
             }
-            core.info(`Extracting MikeroTools ${url}`);
+            core.info(`Dowloading MikeroTools ${url}`);
             let downloadPath = yield tc.downloadTool(url);
-            core.info(`Extracting MikeroTools ${url}`);
+            core.info(`Extracting MikeroTools ${downloadPath}`);
             let extPath = yield tc.extractTar(downloadPath);
             let binPath = path.join(extPath, 'bin');
             let libPath = path.join(extPath, 'lib');
-            core.info(`Path Bin: ${binPath}`);
+            core.info(`MikeroTools ${extPath}`);
             fs_1.default.readdir(extPath, (err, files) => {
-                files.forEach(file => {
-                    core.info(file);
-                });
+                core.info(`Files: ${files}`);
             });
+            core.info(`Path Bin: ${binPath}`);
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
-            console.log('Caching tools');
             // core.addPath(toolPath);
             console.log('Successfully installed', '1');
         }

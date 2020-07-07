@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
 import fs from 'fs'
 import * as path from 'path';
+import {formatWithOptions} from "util";
 
 
 const IS_WINDOWS = process.platform === 'win32';
@@ -16,27 +17,26 @@ async function run() {
         }
 
 
-            core.info(`Extracting MikeroTools ${url}`);
+            core.info(`Dowloading MikeroTools ${url}`);
             let downloadPath = await tc.downloadTool(url);
 
-            core.info(`Extracting MikeroTools ${url}`);
+            core.info(`Extracting MikeroTools ${downloadPath}`);
             let extPath: string = await tc.extractTar(downloadPath)
             let binPath: string = path.join(extPath, 'bin')
             let libPath: string = path.join(extPath, 'lib')
 
+            core.info(`MikeroTools ${extPath}`);
+
+            fs.readdir(extPath,(err, files) => {
+                core.info(`Files: ${files}`)
+            })
 
             core.info(`Path Bin: ${binPath}`)
 
-            fs.readdir(extPath, (err, files) => {
-                files.forEach(file => {
-                    core.info(file);
-                });
-            });
 
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
 
-            console.log('Caching tools');
 
 
             // core.addPath(toolPath);
