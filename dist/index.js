@@ -419,7 +419,7 @@ const tc = __importStar(__webpack_require__(614));
 const fs_1 = __importDefault(__webpack_require__(747));
 const path = __importStar(__webpack_require__(622));
 const IS_WINDOWS = process.platform === 'win32';
-const url = 'https://mikero.bytex.digital/api/download?filename=depbo-tools-0.7.70-linux-64bit.tgz';
+const url = 'https://github.com/Anrop/docker-mikero-tools/archive/0.5.50.tar.gz';
 const MIKERO_CACHE_NAME = 'mikero-tools';
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -433,15 +433,14 @@ function run() {
             let extPath = yield tc.extractTar(downloadPath);
             let binPath = path.join(extPath, 'bin');
             let libPath = path.join(extPath, 'lib');
-            core.info(`MikeroTools ${extPath}`);
+            core.info(`MikeroTools Extract Path ${extPath}`);
             fs_1.default.readdir(extPath, (err, files) => {
                 core.info(`Files: ${files}`);
             });
             core.info(`Path Bin: ${binPath}`);
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
-            // core.addPath(toolPath);
-            console.log('Successfully installed', '1');
+            console.log('Successfully installed', 'Mikero Tools');
         }
         catch (e) {
             core.setFailed(e.message);
