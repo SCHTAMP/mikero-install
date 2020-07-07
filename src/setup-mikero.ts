@@ -59,3 +59,5 @@ async function run() {
     }
 
 }
+
+run();

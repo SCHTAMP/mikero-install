@@ -428,7 +428,6 @@ function run() {
                 core.setFailed('This can be used only for Linux');
             }
             let toolPath = tc.find(MIKERO_CACHE_NAME, '1');
-            core.info(`MikeroTools ${toolPath}`);
             if (!toolPath) {
                 core.info(`Extracting MikeroTools ${url}`);
                 let downloadPath = yield tc.downloadTool(url);
@@ -463,6 +462,7 @@ function run() {
         }
     });
 }
+run();
 
 
 /***/ }),
