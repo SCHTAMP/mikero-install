@@ -442,6 +442,15 @@ function run() {
             let binPath = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'bin');
             let libPath = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'lib');
             core.info(`Path Bin: ${binPath}`);
+            fs_1.default.readdir(path.join(extPath, 'docker-mikero-tools-0.5.50'), (err, files) => {
+                core.info(`Main: ${files}`);
+            });
+            fs_1.default.readdir(binPath, (err, files) => {
+                core.info(`Bin: ${files}`);
+            });
+            fs_1.default.readdir(libPath, (err, files) => {
+                core.info(`Lib: ${files}`);
+            });
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
             console.log('Successfully installed', 'Mikero Tools');

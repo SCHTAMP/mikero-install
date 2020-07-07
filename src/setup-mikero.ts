@@ -40,10 +40,21 @@ async function run() {
             let libPath: string = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'lib')
             core.info(`Path Bin: ${binPath}`)
 
+            fs.readdir(path.join(extPath, 'docker-mikero-tools-0.5.50'),(err, files) => {
+                core.info(`Main: ${files}`);
+            })
+
+            fs.readdir(binPath,(err, files) => {
+                core.info(`Bin: ${files}`);
+            })
+
+            fs.readdir(libPath,(err, files) => {
+                core.info(`Lib: ${files}`);
+            })
+
 
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
-
 
 
 
