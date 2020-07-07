@@ -22,15 +22,20 @@ async function run() {
 
             core.info(`Extracting MikeroTools ${downloadPath}`);
             let extPath: string = await tc.extractTar(downloadPath, path.join(__dirname, 'mikero_tools'))
-            let binPath: string = path.join(extPath, 'bin')
-            let libPath: string = path.join(extPath, 'lib')
 
             core.info(`MikeroTools Extract Path ${extPath}`);
 
+            let finalpath: string = '';
+
             fs.readdir(extPath,(err, files) => {
-                core.info(`Files: ${files}`)
+                files.forEach(file => {
+                    finalpath = file;
+                });
             })
 
+
+            let binPath: string = path.join(path.join(extPath, finalpath), 'bin')
+            let libPath: string = path.join(path.join(extPath, finalpath), 'lib')
             core.info(`Path Bin: ${binPath}`)
 
 

@@ -431,12 +431,15 @@ function run() {
             let downloadPath = yield tc.downloadTool(url);
             core.info(`Extracting MikeroTools ${downloadPath}`);
             let extPath = yield tc.extractTar(downloadPath, path.join(__dirname, 'mikero_tools'));
-            let binPath = path.join(extPath, 'bin');
-            let libPath = path.join(extPath, 'lib');
             core.info(`MikeroTools Extract Path ${extPath}`);
+            let finalpath = '';
             fs_1.default.readdir(extPath, (err, files) => {
-                core.info(`Files: ${files}`);
+                files.forEach(file => {
+                    finalpath = file;
+                });
             });
+            let binPath = path.join(path.join(extPath, finalpath), 'bin');
+            let libPath = path.join(path.join(extPath, finalpath), 'lib');
             core.info(`Path Bin: ${binPath}`);
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
