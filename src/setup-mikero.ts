@@ -18,11 +18,9 @@ async function run() {
 
 
         if (!toolPath) {
-            console.log('Downloading MikeroTools', url);
             core.info(`Extracting MikeroTools ${url}`);
             let downloadPath = await tc.downloadTool(url);
 
-            console.log('Extracting MikeroTools', url);
             core.info(`Extracting MikeroTools ${url}`);
             let extPath: string = await tc.extractTar(downloadPath)
             let binPath: string = path.join(extPath, 'bin')

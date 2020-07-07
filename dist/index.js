@@ -428,11 +428,10 @@ function run() {
                 core.setFailed('This can be used only for Linux');
             }
             let toolPath = tc.find(MIKERO_CACHE_NAME, '1');
+            core.info(`MikeroTools ${toolPath}`);
             if (!toolPath) {
-                console.log('Downloading MikeroTools', url);
                 core.info(`Extracting MikeroTools ${url}`);
                 let downloadPath = yield tc.downloadTool(url);
-                console.log('Extracting MikeroTools', url);
                 core.info(`Extracting MikeroTools ${url}`);
                 let extPath = yield tc.extractTar(downloadPath);
                 let binPath = path.join(extPath, 'bin');
