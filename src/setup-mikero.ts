@@ -19,9 +19,11 @@ async function run() {
 
         if (!toolPath) {
             console.log('Downloading MikeroTools', url);
+            core.info(`Extracting MikeroTools ${url}`);
             let downloadPath = await tc.downloadTool(url);
 
             console.log('Extracting MikeroTools', url);
+            core.info(`Extracting MikeroTools ${url}`);
             let extPath: string = await tc.extractTar(downloadPath)
             let binPath: string = path.join(extPath, 'bin')
             let libPath: string = path.join(extPath, 'lib')
@@ -29,6 +31,16 @@ async function run() {
             if (!(fs.existsSync(binPath) || fs.existsSync(libPath))) {
                 core.setFailed('Missing path to lib or bin directory');
             }
+
+
+            core.info(`Path install: ${extPath}`)
+            core.info(`Path Bin: ${binPath}`)
+
+            fs.readdir(extPath, (err, files) => {
+                files.forEach(file => {
+                    core.info(file);
+                });
+            });
 
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', toolPath);
@@ -40,7 +52,7 @@ async function run() {
             console.log('Using cached tool');
             }
 
-            core.addPath(toolPath);
+            // core.addPath(toolPath);
 
         console.log('Successfully installed', '1');
 

@@ -430,14 +430,23 @@ function run() {
             let toolPath = tc.find(MIKERO_CACHE_NAME, '1');
             if (!toolPath) {
                 console.log('Downloading MikeroTools', url);
+                core.info(`Extracting MikeroTools ${url}`);
                 let downloadPath = yield tc.downloadTool(url);
                 console.log('Extracting MikeroTools', url);
+                core.info(`Extracting MikeroTools ${url}`);
                 let extPath = yield tc.extractTar(downloadPath);
                 let binPath = path.join(extPath, 'bin');
                 let libPath = path.join(extPath, 'lib');
                 if (!(fs_1.default.existsSync(binPath) || fs_1.default.existsSync(libPath))) {
                     core.setFailed('Missing path to lib or bin directory');
                 }
+                core.info(`Path install: ${extPath}`);
+                core.info(`Path Bin: ${binPath}`);
+                fs_1.default.readdir(extPath, (err, files) => {
+                    files.forEach(file => {
+                        core.info(file);
+                    });
+                });
                 core.addPath(binPath);
                 core.exportVariable('LD_LIBRARY_PATH', toolPath);
                 console.log('Caching tools');
@@ -447,7 +456,7 @@ function run() {
             else {
                 console.log('Using cached tool');
             }
-            core.addPath(toolPath);
+            // core.addPath(toolPath);
             console.log('Successfully installed', '1');
         }
         catch (e) {
