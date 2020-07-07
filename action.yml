@@ -1,0 +1,9 @@
+name: 'Setup Mikero Command Line Tools'
+description: 'Set up a Mikero Command Line Tools in the PATH'
+author: 'SCHTAMP'
+branding:
+  icon: play
+  color: green
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
