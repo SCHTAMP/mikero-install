@@ -438,8 +438,9 @@ function run() {
                     finalpath = file;
                 });
             });
-            let binPath = path.join(path.join(extPath, finalpath), 'bin');
-            let libPath = path.join(path.join(extPath, finalpath), 'lib');
+            console.log('File path:', finalpath);
+            let binPath = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'bin');
+            let libPath = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'lib');
             core.info(`Path Bin: ${binPath}`);
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);

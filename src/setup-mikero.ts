@@ -33,9 +33,11 @@ async function run() {
                 });
             })
 
+            console.log('File path:', finalpath);
 
-            let binPath: string = path.join(path.join(extPath, finalpath), 'bin')
-            let libPath: string = path.join(path.join(extPath, finalpath), 'lib')
+
+            let binPath: string = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'bin')
+            let libPath: string = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'lib')
             core.info(`Path Bin: ${binPath}`)
 
 
