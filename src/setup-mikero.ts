@@ -21,7 +21,7 @@ async function run() {
             let downloadPath = await tc.downloadTool(url);
 
             core.info(`Extracting MikeroTools ${downloadPath}`);
-            let extPath: string = await tc.extractTar(downloadPath)
+            let extPath: string = await tc.extractTar(downloadPath, path.join(__dirname, 'mikero_tools'))
             let binPath: string = path.join(extPath, 'bin')
             let libPath: string = path.join(extPath, 'lib')
 

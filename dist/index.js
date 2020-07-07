@@ -430,7 +430,7 @@ function run() {
             core.info(`Dowloading MikeroTools ${url}`);
             let downloadPath = yield tc.downloadTool(url);
             core.info(`Extracting MikeroTools ${downloadPath}`);
-            let extPath = yield tc.extractTar(downloadPath);
+            let extPath = yield tc.extractTar(downloadPath, path.join(__dirname, 'mikero_tools'));
             let binPath = path.join(extPath, 'bin');
             let libPath = path.join(extPath, 'lib');
             core.info(`MikeroTools Extract Path ${extPath}`);
