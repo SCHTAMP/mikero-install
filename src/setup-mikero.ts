@@ -25,23 +25,12 @@ async function run() {
 
             core.info(`MikeroTools Extract Path ${extPath}`);
 
-            let finalpath;
+            let finalPath: string = path.join(extPath, 'docker-mikero-tools-0.5.50')
 
-            fs.readdir(extPath,(err, files) => {
-                core.info(`All Files:  ${files}`);
-                files.forEach(file => {
-                    core.info(`Files:  ${file}`);
-                    finalpath = file.toString();
-                });
-            })
-
-            console.log('File path:', finalpath);
-
-
-            let binPath: string = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'bin')
-            let libPath: string = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'lib')
+            let binPath: string = path.join(finalPath, 'bin')
+            let libPath: string = path.join(finalPath, 'lib')
             core.info(`Path Bin: ${binPath}`)
-
+            core.info(`Path Lib: ${binPath}`)
 
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
@@ -53,7 +42,6 @@ async function run() {
     } catch (e) {
         core.setFailed(e.message);
     }
-
 }
 
 run();

@@ -410,13 +410,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(371));
 const tc = __importStar(__webpack_require__(614));
-const fs_1 = __importDefault(__webpack_require__(747));
 const path = __importStar(__webpack_require__(622));
 const IS_WINDOWS = process.platform === 'win32';
 const url = 'https://github.com/Anrop/docker-mikero-tools/archive/0.5.50.tar.gz';
@@ -432,18 +428,11 @@ function run() {
             core.info(`Extracting MikeroTools ${downloadPath}`);
             let extPath = yield tc.extractTar(downloadPath, path.join(__dirname, 'mikero_tools'));
             core.info(`MikeroTools Extract Path ${extPath}`);
-            let finalpath;
-            fs_1.default.readdir(extPath, (err, files) => {
-                core.info(`All Files:  ${files}`);
-                files.forEach(file => {
-                    core.info(`Files:  ${file}`);
-                    finalpath = file.toString();
-                });
-            });
-            console.log('File path:', finalpath);
-            let binPath = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'bin');
-            let libPath = path.join(path.join(extPath, 'docker-mikero-tools-0.5.50'), 'lib');
+            let finalPath = path.join(extPath, 'docker-mikero-tools-0.5.50');
+            let binPath = path.join(finalPath, 'bin');
+            let libPath = path.join(finalPath, 'lib');
             core.info(`Path Bin: ${binPath}`);
+            core.info(`Path Lib: ${binPath}`);
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
             console.log('Successfully installed', 'Mikero Tools');
