@@ -7,7 +7,7 @@ async function run() {
     try {
         let settings = core.getInput('build-path')
         core.info(`ENV: ${settings}`)
-        await mikeroInstall;
+        await mikeroInstall();
 
         // let _path: string = await io.which('makepbo', true);
         //

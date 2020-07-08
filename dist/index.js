@@ -77,7 +77,7 @@ function run() {
         try {
             let settings = core.getInput('build-path');
             core.info(`ENV: ${settings}`);
-            yield setup_mikero_1.mikeroInstall;
+            yield setup_mikero_1.mikeroInstall();
             // let _path: string = await io.which('makepbo', true);
             //
             // core.info(`MakePbo: ${_path}`)
