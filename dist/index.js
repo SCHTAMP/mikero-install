@@ -72,15 +72,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(371));
 const setup_mikero_1 = __webpack_require__(195);
-const io = __importStar(__webpack_require__(647));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let settings = core.getInput('build-path');
             core.info(`ENV: ${settings}`);
             yield setup_mikero_1.mikeroInstall;
-            let _path = yield io.which('makepbo', true);
-            core.info(`MakePbo: ${_path}`);
+            // let _path: string = await io.which('makepbo', true);
+            //
+            // core.info(`MakePbo: ${_path}`)
         }
         catch (e) {
             core.setFailed(e.message);
