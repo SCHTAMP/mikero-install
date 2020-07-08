@@ -72,15 +72,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(371));
 const setup_mikero_1 = __webpack_require__(195);
+const io = __importStar(__webpack_require__(647));
+const inp = __importStar(__webpack_require__(633));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let settings = core.getInput('build-path');
-            core.info(`ENV: ${settings}`);
+            const settings = inp.getInputs();
+            core.info(`ENV: ${settings.buildPath}`);
             yield setup_mikero_1.mikeroInstall();
-            // let _path: string = await io.which('makepbo', true);
-            //
-            // core.info(`MakePbo: ${_path}`)
+            let _path = yield io.which('makepbo', true);
+            core.info(`MakePbo: ${_path}`);
         }
         catch (e) {
             core.setFailed(e.message);
@@ -4463,6 +4464,42 @@ module.exports = require("path");
 /***/ (function(module) {
 
 module.exports = require("net");
+
+/***/ }),
+
+/***/ 633:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(371));
+const path = __importStar(__webpack_require__(622));
+function getInputs() {
+    const result = {};
+    let githubWorkspacePath = process.env['GITHUB_WORKSPACE'];
+    if (!githubWorkspacePath) {
+        throw new Error('GITHUB_WORKSPACE not defined');
+    }
+    githubWorkspacePath = path.resolve(githubWorkspacePath);
+    core.debug(`GITHUB_WORKSPACE = '${githubWorkspacePath}'`);
+    result.buildPath = core.getInput('build-path') || './build';
+    result.buildPath = path.resolve(githubWorkspacePath, result.buildPath);
+    core.debug(`buildPath = ${result.buildPath}`);
+    if (!(result.buildPath + path.sep).startsWith(githubWorkspacePath + path.sep)) {
+        throw new Error(`Repository path '${result.buildPath}' is not under '${githubWorkspacePath}'`);
+    }
+    return result;
+}
+exports.getInputs = getInputs;
+
 
 /***/ }),
 

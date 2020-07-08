@@ -10,7 +10,7 @@ inputs:
 #    required: false
   build-path:
     description: 'Path where build PBOs will be stored'
-    required: true
+    required: false
 branding:
   icon: trash-2
   color: green
