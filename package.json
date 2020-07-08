@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "ncc build src/setup-mikero.ts"
+    "build": "ncc build src/*"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^1.2.4",
+    "@actions/exec": "^1.0.4",
+    "@actions/io": "^1.0.2",
     "@actions/tool-cache": "^1.5.5",
     "@types/jest": "^26.0.4",
     "@types/node": "^14.0.18"

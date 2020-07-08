@@ -1,8 +1,18 @@
 name: 'Setup Mikero Command Line Tools'
 description: 'Set up a Mikero Command Line Tools in the PATH'
 author: 'SCHTAMP'
+inputs:
+#  path-dir:
+#    description: 'Path to directory to recursively build directories'
+#    required: false
+#  path:
+#    description: 'Path to directory to build'
+#    required: false
+  build-path:
+    description: 'Path where build PBOs will be stored'
+    required: true
 branding:
-  icon: play
+  icon: trash-2
   color: green
 runs:
   using: 'node12'

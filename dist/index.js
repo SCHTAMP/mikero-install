@@ -40,7 +40,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(195);
+/******/ 		return __webpack_require__(7);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -48,6 +48,49 @@ module.exports =
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ 7:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(371));
+const setup_mikero_1 = __webpack_require__(195);
+const io = __importStar(__webpack_require__(647));
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let settings = core.getInput('build-path');
+            core.info(`ENV: ${settings}`);
+            yield setup_mikero_1.mikeroInstall;
+            let _path = yield io.which('makepbo', true);
+            core.info(`MakePbo: ${_path}`);
+        }
+        catch (e) {
+            core.setFailed(e.message);
+        }
+    });
+}
+run();
+
+
+/***/ }),
 
 /***/ 9:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
@@ -391,7 +434,7 @@ module.exports = bytesToUuid;
 /***/ }),
 
 /***/ 195:
-/***/ (function(__unusedmodule, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -414,13 +457,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(371));
 const tc = __importStar(__webpack_require__(614));
 const path = __importStar(__webpack_require__(622));
-const IS_WINDOWS = process.platform === 'win32';
 const url = 'https://github.com/Anrop/docker-mikero-tools/archive/0.5.50.tar.gz';
 const MIKERO_CACHE_NAME = 'mikero-tools';
-function run() {
+function mikeroInstall() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            if (IS_WINDOWS) {
+            if (process.platform === 'win32') {
                 core.setFailed('This can be used only for Linux');
             }
             core.info(`Dowloading MikeroTools ${url}`);
@@ -431,18 +473,19 @@ function run() {
             let finalPath = path.join(extPath, 'docker-mikero-tools-0.5.50');
             let binPath = path.join(finalPath, 'bin');
             let libPath = path.join(finalPath, 'lib');
-            core.info(`Path Bin: ${binPath}`);
-            core.info(`Path Lib: ${binPath}`);
             core.addPath(binPath);
             core.exportVariable('LD_LIBRARY_PATH', libPath);
-            console.log('Successfully installed', 'Mikero Tools');
+            console.log('Successfully installed', MIKERO_CACHE_NAME);
         }
         catch (e) {
             core.setFailed(e.message);
         }
     });
 }
-run();
+exports.mikeroInstall = mikeroInstall;
+module.exports = {
+    mikeroInstall
+};
 
 
 /***/ }),
