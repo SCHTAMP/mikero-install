@@ -112,7 +112,8 @@ function run() {
                             }
                             if (stat && stat.isDirectory()) {
                                 let bPath = path.resolve(directoryPath, file);
-                                let destPath = path.resolve(directoryPath, file) + '.pbo';
+                                let destPath = buildPath;
+                                core.debug(`CI args: makepbo ${bPath} ${destPath}`);
                                 exec.exec('makepbo', [bPath, destPath]); // 0: Path to build 1: Where to put pbo
                             }
                         });
