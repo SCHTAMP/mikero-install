@@ -50,6 +50,9 @@ async function run() {
                             let destPath : string = buildPath
                             core.debug(`CI args: makepbo ${bPath} ${destPath}`)
                             exec.exec('makepbo', [bPath, destPath]) // 0: Path to build 1: Where to put pbo
+                                .catch(reason => {
+                                    core.error(reason)
+                                })
                         }
                     })
                 })
