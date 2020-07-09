@@ -2,15 +2,15 @@ name: 'Setup Mikero Command Line Tools'
 description: 'Set up a Mikero Command Line Tools in the PATH'
 author: 'SCHTAMP'
 inputs:
-#  path-dir:
-#    description: 'Path to directory to recursively build directories'
-#    required: false
-#  path:
-#    description: 'Path to directory to build'
-#    required: false
+  direct-build:
+    description: 'If true, build-path will be packed directly. If false, all dirs in build-path will be packed'
+    required: false
+  path:
+    description: 'Path to directory to build'
+    required: false
   build-path:
     description: 'Path where build PBOs will be stored'
-    required: false
+    required: true
 branding:
   icon: trash-2
   color: green

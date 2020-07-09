@@ -2,7 +2,7 @@ export interface IGitSettings {
 
     buildPath: string;
 
-    directoryToBuild: string;
+    directBuild: boolean;
 
     directoryPath: string;
 

@@ -1,7 +1,11 @@
 import * as core from '@actions/core';
 import {mikeroInstall} from './setup-mikero'
-import * as io from '@actions/io'
+ import * as io from '@actions/io'
+import * as fs from 'fs'
 import * as inp from './inputs'
+import * as exec from '@actions/exec'
+import * as path from "path";
+
 
 
 async function run() {
@@ -10,14 +14,50 @@ async function run() {
         core.info(`ENV: ${settings.buildPath}`)
         await mikeroInstall();
 
-        let _path: string = await io.which('makepbo', true);
+        if (!io.which('makepbo', true)){
+            core.setFailed('Make Pbo not exists')
+            return
+        }
 
-        core.info(`MakePbo: ${_path}`)
+        const buildPath = settings.buildPath
+        const directoryPath = settings.directoryPath
+
+        if (!fs.existsSync(buildPath)) {
+            core.setFailed('Build Path not exists')
+            return
+        }
+
+        if (settings.directBuild){
+            core.setFailed('Not implemented')
+            return
+        } else {
+            fs.readdir(directoryPath, (err, files) => {
+                if (err) {
+                    core.setFailed('Error read directory')
+                    return
+                }
+                files.forEach((file, index) => {
+                    let filePath = path.join(directoryPath, file)
+
+                    fs.stat(filePath, (error, stat) => {
+                        if (error) {
+                            console.error("Error stating file.", error);
+                            return;
+                        }
+
+                        if (stat && stat.isDirectory()) {
+                            let bPath : string = path.resolve(directoryPath, file)
+                            let destPath : string = path.resolve(directoryPath, file) + '.pbo'
+                            exec.exec('makepbo', [bPath, destPath]) // 0: Path to build 1: Where to put pbo
+                        }
+                    })
+                })
+            })
+        }
 
     } catch (e) {
         core.setFailed(e.message);
     }
-
 }
 
 run()

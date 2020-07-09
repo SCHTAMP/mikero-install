@@ -73,15 +73,52 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(371));
 const setup_mikero_1 = __webpack_require__(195);
 const io = __importStar(__webpack_require__(647));
+const fs = __importStar(__webpack_require__(747));
 const inp = __importStar(__webpack_require__(633));
+const exec = __importStar(__webpack_require__(406));
+const path = __importStar(__webpack_require__(622));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const settings = inp.getInputs();
             core.info(`ENV: ${settings.buildPath}`);
             yield setup_mikero_1.mikeroInstall();
-            let _path = yield io.which('makepbo', true);
-            core.info(`MakePbo: ${_path}`);
+            if (!io.which('makepbo', true)) {
+                core.setFailed('Make Pbo not exists');
+                return;
+            }
+            const buildPath = settings.buildPath;
+            const directoryPath = settings.directoryPath;
+            if (!fs.existsSync(buildPath)) {
+                core.setFailed('Build Path not exists');
+                return;
+            }
+            if (settings.directBuild) {
+                core.setFailed('Not implemented');
+                return;
+            }
+            else {
+                fs.readdir(directoryPath, (err, files) => {
+                    if (err) {
+                        core.setFailed('Error read directory');
+                        return;
+                    }
+                    files.forEach((file, index) => {
+                        let filePath = path.join(directoryPath, file);
+                        fs.stat(filePath, (error, stat) => {
+                            if (error) {
+                                console.error("Error stating file.", error);
+                                return;
+                            }
+                            if (stat && stat.isDirectory()) {
+                                let bPath = path.resolve(directoryPath, file);
+                                let destPath = path.resolve(directoryPath, file) + '.pbo';
+                                exec.exec('makepbo', [bPath, destPath]); // 0: Path to build 1: Where to put pbo
+                            }
+                        });
+                    });
+                });
+            }
         }
         catch (e) {
             core.setFailed(e.message);
@@ -4490,11 +4527,22 @@ function getInputs() {
     }
     githubWorkspacePath = path.resolve(githubWorkspacePath);
     core.debug(`GITHUB_WORKSPACE = '${githubWorkspacePath}'`);
+    // Build Path : string
     result.buildPath = core.getInput('build-path') || './build';
     result.buildPath = path.resolve(githubWorkspacePath, result.buildPath);
     core.debug(`buildPath = ${result.buildPath}`);
     if (!(result.buildPath + path.sep).startsWith(githubWorkspacePath + path.sep)) {
         throw new Error(`Repository path '${result.buildPath}' is not under '${githubWorkspacePath}'`);
+    }
+    // Direct Build : bool
+    result.directBuild = (core.getInput('direct-build') || 'false').toUpperCase() === 'TRUE';
+    core.debug(`directBuild = ${result.directBuild}`);
+    // Source Path : string
+    result.directoryPath = core.getInput('path') || '.';
+    result.directoryPath = path.resolve(githubWorkspacePath, result.directoryPath);
+    core.debug(`buildPath = ${result.buildPath}`);
+    if (!(result.buildPath + path.sep).startsWith(githubWorkspacePath + path.sep)) {
+        throw new Error(`Repository path '${result.directoryPath}' is not under '${githubWorkspacePath}'`);
     }
     return result;
 }
