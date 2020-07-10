@@ -3,7 +3,7 @@ import * as tc from '@actions/tool-cache';
 import * as path from 'path';
 
 
-const url = 'https://github.com/Anrop/docker-mikero-tools/archive/0.5.50.tar.gz'
+const url = 'https://github.com/SCHTAMP/mikero-tools/archive/0.7.70.tar.gz'
 const MIKERO_CACHE_NAME = 'mikero-tools'
 
 
@@ -21,7 +21,7 @@ export async function mikeroInstall() {
 
             core.info(`MikeroTools Extract Path ${extPath}`);
 
-            let finalPath: string = path.join(extPath, 'docker-mikero-tools-0.5.50')
+            let finalPath: string = path.join(extPath, 'mikero-tools-0.7.70')
 
             let binPath: string = path.join(finalPath, 'bin')
             let libPath: string = path.join(finalPath, 'lib')
