@@ -49,7 +49,7 @@ async function run() {
                             let bPath : string = path.resolve(directoryPath, file)
                             let destPath : string = buildPath
                             core.debug(`CI args: makepbo ${bPath} ${destPath}`)
-                            exec.exec('makepbo', ["-PA", '-X none', bPath, destPath]) // 0: Path to build 1: Where to put pbo
+                            exec.exec('makepbo', ["-PAX=none", bPath, destPath]) // 0: Path to build 1: Where to put pbo
                                 .catch(reason => {
                                     core.error(reason)
                                 })
