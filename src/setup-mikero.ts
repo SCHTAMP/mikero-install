@@ -26,8 +26,8 @@ export async function mikeroInstall() {
 
             const options = { recursive: true, force: false }
 
-            await io.cp(path.join(finalPath, "bin"), '/usr/local/bin', options);
-            await io.cp(path.join(finalPath, "lib"), '/usr/local/lib', options);
+            await io.cp(path.join(finalPath, "bin/"), '/usr/local/bin/', options);
+            await io.cp(path.join(finalPath, "lib/"), '/usr/local/lib/', options);
 
 
             // let binPath: string = path.join(finalPath, 'bin')
