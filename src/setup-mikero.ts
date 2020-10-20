@@ -39,7 +39,7 @@ export async function mikeroInstall() {
 
             let finalPath: string = path.join(extPath, 'mikero-tools-0.7.70')
 
-            ncp(path.join(finalPath, 'bin'), "/bin", (err: any) =>
+            ncp(path.join(finalPath, 'bin'), "/usr/local/bin", (err: any) =>
             {
                  if (err) {
                    return core.setFailed(err);
@@ -47,7 +47,7 @@ export async function mikeroInstall() {
                  core.info('Copy BIN done!');
                 });
 
-            ncp(path.join(finalPath, 'lib'), "/lib", (err: any) =>
+            ncp(path.join(finalPath, 'lib'), "/usr/local/lib", (err: any) =>
             {
                  if (err) {
                    return core.setFailed(err);

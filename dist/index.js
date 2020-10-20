@@ -5345,13 +5345,13 @@ function mikeroInstall() {
             let extPath = yield tc.extractTar(downloadPath, path.join(__dirname, 'mikero_tools'));
             core.info(`MikeroTools Extract Path ${extPath}`);
             let finalPath = path.join(extPath, 'mikero-tools-0.7.70');
-            ncp(path.join(finalPath, 'bin'), "/bin", (err) => {
+            ncp(path.join(finalPath, 'bin'), "/usr/local/bin", (err) => {
                 if (err) {
                     return core.setFailed(err);
                 }
                 core.info('Copy BIN done!');
             });
-            ncp(path.join(finalPath, 'lib'), "/lib", (err) => {
+            ncp(path.join(finalPath, 'lib'), "/usr/local/lib", (err) => {
                 if (err) {
                     return core.setFailed(err);
                 }
