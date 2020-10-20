@@ -4969,9 +4969,7 @@ function run() {
         try {
             const settings = inp.getInputs();
             core.info(`ENV: ${settings.buildPath}`);
-            // await exec.exec("sudo chown -R $(whoami) /usr/local")
             yield setup_mikero_1.mikeroInstall();
-            yield exec.exec("ldconfig");
             if (!(yield io.which('makepbo', true))) {
                 core.setFailed('Make Pbo not exists');
                 return;

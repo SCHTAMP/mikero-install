@@ -12,9 +12,7 @@ async function run() {
     try {
         const settings = inp.getInputs();
         core.info(`ENV: ${settings.buildPath}`)
-        // await exec.exec("sudo chown -R $(whoami) /usr/local")
         await mikeroInstall();
-        await exec.exec("ldconfig");
 
         if (!await io.which('makepbo', true)){
             core.setFailed('Make Pbo not exists')
