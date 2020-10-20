@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import {mikeroInstall} from './setup-mikero'
- import * as io from '@actions/io'
+import * as io from '@actions/io'
 import * as fs from 'fs'
 import * as inp from './inputs'
 import * as exec from '@actions/exec'
