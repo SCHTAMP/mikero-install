@@ -13,8 +13,9 @@ async function run() {
         const settings = inp.getInputs();
         core.info(`ENV: ${settings.buildPath}`)
         await mikeroInstall();
+        await exec.exec("ldconfig");
 
-        if (!io.which('makepbo', true)){
+        if (!await io.which('makepbo', true)){
             core.setFailed('Make Pbo not exists')
             return
         }
