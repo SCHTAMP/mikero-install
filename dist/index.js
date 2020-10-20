@@ -4969,6 +4969,7 @@ function run() {
         try {
             const settings = inp.getInputs();
             core.info(`ENV: ${settings.buildPath}`);
+            // await exec.exec("sudo chown -R $(whoami) /usr/local")
             yield setup_mikero_1.mikeroInstall();
             yield exec.exec("ldconfig");
             if (!(yield io.which('makepbo', true))) {
@@ -5062,8 +5063,8 @@ function mikeroInstall() {
             core.info(`MikeroTools Extract Path ${extPath}`);
             let finalPath = path.join(extPath, 'mikero-tools-0.7.70');
             const options = { recursive: true, force: false };
-            yield io.cp(path.join(finalPath, "bin/*"), '/usr/local/bin', options);
-            yield io.cp(path.join(finalPath, "lib/*"), '/usr/local/lib', options);
+            yield io.cp(path.join(finalPath, "bin/"), '/usr/local', options);
+            yield io.cp(path.join(finalPath, "lib/"), '/usr/local', options);
             // let binPath: string = path.join(finalPath, 'bin')
             // let libPath: string = path.join(finalPath, 'lib')
             //
