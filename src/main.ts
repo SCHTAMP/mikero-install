@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import {mikeroInstall} from './setup-mikero'
- import * as io from '@actions/io'
+import * as io from '@actions/io'
 import * as fs from 'fs'
 import * as inp from './inputs'
 import * as exec from '@actions/exec'
@@ -14,7 +14,9 @@ async function run() {
         core.info(`ENV: ${settings.buildPath}`)
         await mikeroInstall();
 
-        if (!io.which('makepbo', true)){
+        await exec.exec("sudo ldconfig");
+
+        if (!await io.which('makepbo', true)){
             core.setFailed('Make Pbo not exists')
             return
         }

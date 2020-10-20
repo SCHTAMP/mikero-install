@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
 import * as path from 'path';
+import * as io from '@actions/io'
 
 
 const url = 'https://github.com/SCHTAMP/mikero-tools/archive/0.7.70.tar.gz'
@@ -13,7 +14,7 @@ export async function mikeroInstall() {
             core.setFailed('This can be used only for Linux');
         }
 
-            core.info(`Dowloading MikeroTools ${url}`);
+            core.info(`Downloading MikeroTools ${url}`);
             let downloadPath = await tc.downloadTool(url);
 
             core.info(`Extracting MikeroTools ${downloadPath}`);
@@ -23,11 +24,17 @@ export async function mikeroInstall() {
 
             let finalPath: string = path.join(extPath, 'mikero-tools-0.7.70')
 
-            let binPath: string = path.join(finalPath, 'bin')
-            let libPath: string = path.join(finalPath, 'lib')
+            const options = { recursive: true, force: false }
 
-            core.addPath(binPath);
-            core.exportVariable('LD_LIBRARY_PATH', libPath);
+            await io.cp(path.join(finalPath, "bin/"), '/usr/local', options);
+            await io.cp(path.join(finalPath, "lib/"), '/usr/local', options);
+
+
+            // let binPath: string = path.join(finalPath, 'bin')
+            // let libPath: string = path.join(finalPath, 'lib')
+            //
+            // core.addPath(binPath);
+            // core.exportVariable('LD_LIBRARY_PATH', libPath);
 
 
 
